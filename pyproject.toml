@@ -1,14 +1,22 @@
 [project]
 name = "handbook-tools"
-version = "0.1.0"
+version = "0.2.0"
 description = "Shared MkDocs build tooling for the St Margaret's College handbooks"
 requires-python = ">=3.10"
 
+# The header hook needs nothing but MkDocs itself; handbook.py is stdlib only.
 dependencies = [
-    # The hooks are MkDocs hooks, and the DOCX export parses the HTML the
-    # to-pdf plugin writes and converts it with pandoc. pypandoc-binary is a
-    # wheel bundling the pandoc binary, so no system install is needed.
     "mkdocs==1.6.1",
+]
+
+[project.optional-dependencies]
+# The Word working copy, and only that: it parses the HTML the to-pdf plugin
+# writes and converts it with pandoc. pypandoc-binary is a wheel bundling the
+# pandoc binary - no system install, but 155 MB, which a site that only wants
+# the PDF running header has no reason to download. Depend on
+# `handbook-tools[docx]` where the DOCX hook is registered, plain
+# `handbook-tools` where it is not.
+docx = [
     "beautifulsoup4>=4.12",
     "pypandoc-binary==1.17",
 ]
