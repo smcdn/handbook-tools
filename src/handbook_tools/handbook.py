@@ -28,8 +28,10 @@ class Handbook:
         self.title = config["site_name"]
         # "Members' Handbook" - the short name, for headers and file names.
         self.short_title = handbook.get("short_name") or self.title
-        # "Members" - who the published handbook is written for.
-        self.audience = handbook.get("audience", "readers")
+        # Which version is authoritative, and why - a clause, because it differs:
+        # one handbook is read on the website, another is printed and handed out.
+        self.authority = (handbook.get("authority")
+                          or "the published handbook is the one that counts")
         # Alt text of the images the Word copy floats; see docx_post.py.
         self.float_figures = handbook.get("float_figures") or []
         self.float_images = handbook.get("float_images") or []
